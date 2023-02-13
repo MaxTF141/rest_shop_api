@@ -17,10 +17,10 @@ app.get('/', (req, res)=>{
     res.json({ message: 'Welcome to my application'});
 });
 
-require('./routes/rest_shop.router.js')(app);
+require('./routes/products.router.js')(app);
 
 const PORT = process.env.PORT || 8080;
-require("./routes/rest_shop.router.js")(app);
+require("./routes/products.router.js")(app);
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`);
 });

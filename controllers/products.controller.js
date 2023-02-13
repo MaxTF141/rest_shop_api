@@ -1,6 +1,6 @@
-const RestShop = require("../models/rest_shop.model.js");
+const Product = require("../models/product.model.js");
 
-// Create and Save a new RestShop
+// Create and Save a new Product
 exports.create = (req, res) => {
   if (!req.body) {
     res.status(400).send({
@@ -8,70 +8,70 @@ exports.create = (req, res) => {
     });
   }
 
-  const restShop = new RestShop({
+  const product = new Product({
     title: req.body.title,
     description: req.body.description,
     published: req.body.published || false
   });
 
-  RestShop.create(restShop, (err, data) => {
+  Product.create(product, (err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial."
+          err.message || "Some error occurred while creating the Product."
       });
     else res.send(data);
   });
 };
 
-// Retrieve all RestShop from the database (with condition).
+// Retrieve all Product from the database (with condition).
 exports.findAll = (req, res) => {
       const title = req.query.title;
 
-  RestShop.getAll(title, (err, data) => {
+  Product.getAll(title, (err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving products."
       });
     else res.send(data);
   });
 };
 
 exports.findAllPublished = (req, res) => {
-  RestShop.getAllPublished((err, data) => {
+  Product.getAllPublished((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving products."
       });
     else res.send(data);
   });
 };
 
-// Find a single Tutorial with a id
+// Find a single Product with a id
 exports.findOne = (req, res) => {
     
 };
 
-// find all published Tutorials
+// find all published products
 exports.findAllPublished = (req, res) => {
-    RestShop.findById(req.params.id, (err, data) => {
+    Product.findById(req.params.id, (err, data) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `Not found RestShop with id ${req.params.id}.`
+              message: `Not found Product with id ${req.params.id}.`
             });
           } else {
             res.status(500).send({
-              message: "Error retrieving RestShop with id " + req.params.id
+              message: "Error retrieving Product with id " + req.params.id
             });
           }
         } else res.send(data);
       });
 };
 
-// Update a Tutorial identified by the id in the request
+// Update a Product identified by the id in the request
 exports.update = (req, res) => {
     if (!req.body) {
         res.status(400).send({
@@ -81,18 +81,18 @@ exports.update = (req, res) => {
     
       console.log(req.body);
     
-      RestShop.updateById(
+      Product.updateById(
         req.params.id,
-        new RestShop(req.body),
+        new Product(req.body),
         (err, data) => {
           if (err) {
             if (err.kind === "not_found") {
               res.status(404).send({
-                message: `Not found RestShop with id ${req.params.id}.`
+                message: `Not found Product with id ${req.params.id}.`
               });
             } else {
               res.status(500).send({
-                message: "Error updating RestShop with id " + req.params.id
+                message: "Error updating Product with id " + req.params.id
               });
             }
           } else res.send(data);
@@ -101,31 +101,31 @@ exports.update = (req, res) => {
     
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Product with the specified id in the request
 exports.delete = (req, res) => {
-    RestShop.remove(req.params.id, (err, data) => {
+    Product.remove(req.params.id, (err, data) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `Not found RestShop with id ${req.params.id}.`
+              message: `Not found Product with id ${req.params.id}.`
             });
           } else {
             res.status(500).send({
-              message: "Could not delete RestShop with id " + req.params.id
+              message: "Could not delete Product with id " + req.params.id
             });
           }
-        } else res.send({ message: `RestShop was deleted successfully!` });
+        } else res.send({ message: `Product was deleted successfully!` });
       });
 };
 
-// Delete all Tutorials from the database.
+// Delete all products from the database.
 exports.deleteAll = (req, res) => {
-    RestShop.removeAll((err, data) => {
+    Product.removeAll((err, data) => {
         if (err)
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all tutorials."
+              err.message || "Some error occurred while removing all products."
           });
-        else res.send({ message: `All Tutorials were deleted successfully!` });
+        else res.send({ message: `All products were deleted successfully!` });
       });
 };
